@@ -21,6 +21,8 @@ project = 'NL-Explanations'
 copyright = '2019, Ioannis Pelekoudas'
 author = 'Ioannis Pelekoudas'
 
+master_doc = 'index'
+
 
 # -- General configuration ---------------------------------------------------
 
