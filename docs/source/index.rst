@@ -6,7 +6,7 @@ NL-Explanations
 The article
 ===========
 
-Link for the publication_.
+*Link for the* publication_.
 
 .. _publication: http://www.madgik.di.uoa.gr/sites/default/files/icde10_pp333-344.pdf
 
@@ -44,15 +44,28 @@ Solution
 
 The article takes a graph-based approach.
 
-**The Schema**
+**The Schema Graph**
 
 In the beginning of the executions, it fetches the schema of the database and creates a directed graph, the SchemaGraph. As nodes in this graph we have the relations(tables) and their attributes(columns). 
 
 As edges we have the membership edges that connect an attribute node to its relation node (e.g. client_id `of` client), selection edges that connect a relation node to its attribute nodes (e.g. client `whose` client_id) and predicate edges that start from an attribute node and end to another attribute node of another relation. The predicate nodes represent a potential join between two relations.
 
-**The Query**
+.. image:: images/join.png
+   :width: 600
 
-After that, 
+**The Query Graph**
+
+After that, we create the graph of the single query to be translated. The graph followes the logic of the SchemaGraph, where the nodes of the graph are the relations used in the query -one for every tuple variable-, the attribute nodes used in any query element, and the value nodes specified in the WHERE clause of the query.
+
+As for the edges, those are the membership edges -from the attribute to its relation node-, predicate edges -for every predicate that from the SchemaGraph its predicate edge ends on a single value or multiple values. The edge denotes a comparison operator and if the end of the edge is an other attribute, then it is a join predicate edge so it captures both ways. Finaly, and interconnected with the predicate edges are the selection edges. These perform the final connection between the predicate that was previously connected with the operators, with its relation. If the end of the predicate edge is an other attribute, then it is a join predicate edge so selection edge goes both ways as well.
+
+.. image:: images/spj.png
+   :width: 600
+
+There are additional nodes and edges in addition to the ones presented above, to capture functions, expressions, and renaming operations as well as order-by, group-by and having clauses.
+
+.. image:: images/functions+.png
+   :width: 600
 
 The code
 ========
